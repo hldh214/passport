@@ -8,3 +8,5 @@ hello from the other side~
  - remember me
  - i18n
  - role switch w/o re-login
+ - tests?
+ - vue-router
