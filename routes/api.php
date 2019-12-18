@@ -20,14 +20,14 @@ Route::group([
     $router->post('student/signup', 'StudentAuthController@signup');
 
     Route::group([
-        'middleware' => 'auth:api'
+        'middleware' => 'auth:student'
     ], function (Router $router) {
         $router->get('student/logout', 'StudentAuthController@logout');
     });
 });
 
 Route::group([
-    'middleware' => 'auth:api',
+    'middleware' => 'auth:student',
     'prefix' => 'student'
 ], function (Router $router) {
     $router->get('profile', 'StudentController@profile');

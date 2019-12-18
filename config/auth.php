@@ -45,6 +45,16 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+        'student' => [
+            'driver' => 'passport',
+            'provider' => 'students',
+        ],
+
+        'teacher' => [
+            'driver' => 'passport',
+            'provider' => 'teachers',
+        ],
     ],
 
     /*
@@ -69,6 +79,16 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Student::class
+        ],
+
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Teacher::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
