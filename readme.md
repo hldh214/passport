@@ -14,4 +14,4 @@ hello from the other side~
 ### Credit
 
  - https://github.com/doterlin/vue-example-login
- 
+ - https://learnku.com/articles/7358/multiuser-and-multi-field-authentication-system-based-on-laravel-passport-api-two

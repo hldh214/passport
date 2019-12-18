@@ -5,6 +5,8 @@
                 <ul class="navbar-nav">
                     <router-link :to="{ name: 'welcome' }" class="nav-link">Home</router-link>
                     <router-link :to="{ name: 'login' }" class="nav-link" v-if="!this.isLogin()">Login</router-link>
+                    <router-link :to="{ name: 'signup' }" class="nav-link" v-if="!this.isLogin()">Signup</router-link>
+                    <!-- fixme: NEVER DO THIS -->
                     <a href="" @click.prevent="logout()" v-if="isLogin()">Logout</a>
                 </ul>
             </div>

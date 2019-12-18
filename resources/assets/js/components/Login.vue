@@ -1,8 +1,12 @@
 <template>
     <div class="container">
         <form @submit.prevent="onSubmit">
-            <label><input type="email" name="email" v-model="inputText.email"></label>
-            <label><input type="password" name="password" v-model="inputText.password"></label>
+            <label for="email">Email:
+                <input id="email" type="email" name="email" v-model="inputText.email">
+            </label>
+            <label for="password">Password:
+                <input id="password" type="password" name="password" v-model="inputText.password">
+            </label>
             <input type="submit">
         </form>
     </div>
