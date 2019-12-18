@@ -8,6 +8,9 @@ class TeacherController extends Controller
 {
     public function profile(Request $request)
     {
-        return response()->json($request->user());
+        $user = $request->user();
+        $followers = $user->followers()->get();
+
+        return response()->json(compact('user', 'followers'));
     }
 }

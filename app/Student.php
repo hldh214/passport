@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Overtrue\LaravelFollow\Traits\CanFollow;
 
 /**
  * App\Student
@@ -33,7 +34,7 @@ use Laravel\Passport\HasApiTokens;
  */
 class Student extends Authenticatable
 {
-    use HasApiTokens;
+    use HasApiTokens, CanFollow;
 
     protected $guarded = ['id'];
 }
