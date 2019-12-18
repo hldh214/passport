@@ -4,12 +4,20 @@
             <div class="content">
                 <div class="title m-b-md">
                     <p>Welcome {{ this.role }} {{ name }}</p>
-                    <p v-if="this.role === 'student'">teacher list</p>
+
+                    <p v-if="this.role === 'student'">teachers list</p>
                     <ul>
                         <li v-for="teacher in this.teachers">
                             {{ teacher.name }}
                             <a href="" v-if="teacher.following" @click.prevent="toggleFollow(teacher)">Unfollow</a>
                             <a href="" v-else @click.prevent="toggleFollow(teacher)">Follow</a>
+                        </li>
+                    </ul>
+
+                    <p v-if="this.role === 'teacher'">followers list</p>
+                    <ul>
+                        <li v-for="follower in this.followers">
+                            {{ follower.name }}
                         </li>
                     </ul>
                 </div>
