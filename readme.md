@@ -11,6 +11,8 @@ hello from the other side~
  - tests?
  - more front-end stuff?
  - pagination
+ - pusher
+ - Ignition / Whoops
 
 ### Credit
 

@@ -15,6 +15,7 @@
             </label>
             <input type="submit">
         </form>
+        <a href="/oauth/line">Login with Line</a>
     </div>
 </template>
 <script>

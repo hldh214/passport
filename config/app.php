@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Overtrue\LaravelFollow\FollowServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...
