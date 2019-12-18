@@ -14,7 +14,8 @@
         "laravel/passport": "~4.0",
         "laravel/tinker": "~1.0",
         "overtrue/laravel-follow": "^1.1",
-        "paragonie/random_compat": "2.*"
+        "paragonie/random_compat": "2.*",
+        "socialiteproviders/line": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
