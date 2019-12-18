@@ -4,6 +4,8 @@
             <div class="container">
                 <ul class="navbar-nav">
                     <router-link :to="{ name: 'welcome' }" class="nav-link">Home</router-link>
+                    <router-link :to="{ name: 'login' }" class="nav-link" v-if="!this.isLogin()">Login</router-link>
+                    <a href="" @click.prevent="logout()" v-if="isLogin()">Logout</a>
                 </ul>
             </div>
         </nav>
@@ -13,5 +15,18 @@
     </div>
 </template>
 <script>
-    export default {}
+    export default {
+        methods: {
+            isLogin() {
+                return localStorage.getItem('access_token');
+            },
+
+            logout() {
+                axios.get('/api/auth/student/logout').then(_ => {
+                    localStorage.removeItem('access_token');
+                    this.$router.go(0);
+                });
+            }
+        }
+    }
 </script>

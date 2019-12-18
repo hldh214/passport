@@ -25,3 +25,10 @@ Route::group([
         $router->get('student/logout', 'StudentAuthController@logout');
     });
 });
+
+Route::group([
+    'middleware' => 'auth:api',
+    'prefix' => 'student'
+], function (Router $router) {
+    $router->get('profile', 'StudentController@profile');
+});
