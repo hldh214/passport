@@ -26,6 +26,7 @@
             logout() {
                 axios.get('/api/auth/student/logout').then(_ => {
                     localStorage.removeItem('access_token');
+                    localStorage.removeItem('role');
                     this.$router.go(0);
                 });
             }

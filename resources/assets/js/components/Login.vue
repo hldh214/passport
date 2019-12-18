@@ -7,6 +7,12 @@
             <label for="password">Password:
                 <input id="password" type="password" name="password" v-model="inputText.password">
             </label>
+            <label for="student">I am student
+                <input id="student" type="radio" name="role" value="student" v-model="inputText.role">
+            </label>
+            <label for="teacher">I am teacher
+                <input id="teacher" type="radio" name="role" value="teacher" v-model="inputText.role">
+            </label>
             <input type="submit">
         </form>
     </div>
@@ -16,16 +22,17 @@
         name: 'login',
         data() {
             return {
-                inputText: {email: '', password: ''}
+                inputText: {email: '', password: '', role: 'teacher'}
             }
         },
         methods: {
             onSubmit: function () {
-                axios.post('/api/auth/student/login', {
+                axios.post(`/api/auth/${this.inputText.role}/login`, {
                     email: this.inputText.email,
                     password: this.inputText.password
                 }).then(response => {
                     localStorage.setItem('access_token', response.data.access_token);
+                    localStorage.setItem('role', this.inputText.role);
                     this.$router.push('/')
                 })
             }

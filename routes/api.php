@@ -16,13 +16,23 @@ use Illuminate\Routing\Router;
 Route::group([
     'prefix' => 'auth'
 ], function (Router $router) {
+    // fixme: aio???
     $router->post('student/login', 'StudentAuthController@login');
     $router->post('student/signup', 'StudentAuthController@signup');
+
+    $router->post('teacher/login', 'TeacherAuthController@login');
+    $router->post('teacher/signup', 'TeacherAuthController@signup');
 
     Route::group([
         'middleware' => 'auth:student'
     ], function (Router $router) {
         $router->get('student/logout', 'StudentAuthController@logout');
+    });
+
+    Route::group([
+        'middleware' => 'auth:teacher'
+    ], function (Router $router) {
+        $router->get('teacher/logout', 'TeacherAuthController@logout');
     });
 });
 
@@ -31,4 +41,11 @@ Route::group([
     'prefix' => 'student'
 ], function (Router $router) {
     $router->get('profile', 'StudentController@profile');
+});
+
+Route::group([
+    'middleware' => 'auth:teacher',
+    'prefix' => 'teacher'
+], function (Router $router) {
+    $router->get('profile', 'TeacherController@profile');
 });

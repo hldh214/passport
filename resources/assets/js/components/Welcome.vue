@@ -16,7 +16,9 @@
         },
         methods: {
             getUser() {
-                axios.get('/api/student/profile').then(response => {
+                let role = localStorage.getItem('role');
+
+                axios.get(`/api/${role}/profile`).then(response => {
                     this.name = response.data.name;
                 }).catch(reason => {
                     if (reason.response.status === 401) {

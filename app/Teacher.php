@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * App\Teacher
@@ -26,7 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Teacher whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Teacher extends Model
+class Teacher extends Authenticatable
 {
-    //
+    use HasApiTokens;
+
+    protected $guarded = ['id'];
 }

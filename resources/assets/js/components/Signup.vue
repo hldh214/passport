@@ -14,6 +14,12 @@
                 <input id="password_confirmation" type="password" name="password"
                        v-model="inputText.password_confirmation">
             </label>
+            <label for="student">I am student
+                <input id="student" type="radio" name="role" value="student" v-model="inputText.role">
+            </label>
+            <label for="teacher">I am teacher
+                <input id="teacher" type="radio" name="role" value="teacher" v-model="inputText.role">
+            </label>
             <input type="submit">
         </form>
     </div>
@@ -23,12 +29,14 @@
         name: 'signup',
         data() {
             return {
-                inputText: {name: '', email: '', password: '', password_confirmation: ''}
+                inputText: {
+                    name: '', email: '', password: '', password_confirmation: '', role: 'teacher'
+                }
             }
         },
         methods: {
             onSubmit: function () {
-                axios.post('/api/auth/student/signup', {
+                axios.post(`/api/auth/${this.inputText.role}/signup`, {
                     name: this.inputText.name,
                     email: this.inputText.email,
                     password: this.inputText.password,
