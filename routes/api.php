@@ -41,6 +41,7 @@ Route::group([
     'prefix' => 'student'
 ], function (Router $router) {
     $router->get('profile', 'StudentController@profile');
+    $router->post('follow/{teacher}', 'StudentController@follow');
 });
 
 Route::group([

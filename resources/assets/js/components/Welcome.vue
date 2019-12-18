@@ -3,8 +3,15 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <p>Welcome {{ name }}</p>
+                    <p>Welcome {{ this.role }} {{ name }}</p>
                     <p v-if="this.role === 'student'">teacher list</p>
+                    <ul>
+                        <li v-for="teacher in this.teachers">
+                            {{ teacher.name }}
+                            <a href="" v-if="teacher.following" @click.prevent="toggleFollow(teacher)">Unfollow</a>
+                            <a href="" v-else @click.prevent="toggleFollow(teacher)">Follow</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -17,25 +24,33 @@
         },
         methods: {
             getUser() {
-                let role = localStorage.getItem('role');
+                this.role = localStorage.getItem('role');
 
-                if (!role) {
+                if (!this.role) {
                     this.name = 'guest';
                     return;
                 }
 
-                axios.get(`/api/${role}/profile`).then(response => {
+                axios.get(`/api/${this.role}/profile`).then(response => {
                     this.name = response.data.user.name;
+                    this.followings = response.data.followings;
+                    this.teachers = response.data.teachers;
+                    this.followers = response.data.followers;
                 }).catch(reason => {
                     if (reason.response.status === 401) {
                         this.name = 'guest'
                     }
                 });
+            },
+            toggleFollow(teacher) {
+                axios.post(`/api/${this.role}/follow/${teacher.id}`).then(_ => {
+                    teacher.following = !teacher.following;
+                });
             }
         },
         data() {
             return {
-                name: ''
+                name: '', role: '', followings: [], teachers: [], followers: []
             }
         }
     }
