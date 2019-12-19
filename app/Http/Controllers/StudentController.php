@@ -16,8 +16,8 @@ class StudentController extends Controller
      */
     public function profile(Request $request)
     {
-        $user = $request->user();
-        $user->load('line.student');
+        $user = $request->user()->makeHidden(['password', 'deleted_at']);
+        $user->load('line.user');
 
         $teachers = Teacher::all()->map(function (Teacher $teacher) use ($user) {
             $teacher['following'] = $teacher->isFollowedBy($user);

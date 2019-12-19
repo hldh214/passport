@@ -23,6 +23,9 @@ Route::group([
     $router->post('teacher/login', 'TeacherAuthController@login');
     $router->post('teacher/signup', 'TeacherAuthController@signup');
 
+    $router->post('line/query_bindings', 'LineAuthController@queryBindings');
+    $router->post('line/login_with_binding', 'LineAuthController@loginWithBinding');
+
     Route::group([
         'middleware' => 'auth:student'
     ], function (Router $router) {
@@ -38,7 +41,7 @@ Route::group([
 
 Route::group([
     'middleware' => 'auth:student',
-    'prefix' => 'student'
+    'prefix'     => 'student'
 ], function (Router $router) {
     $router->get('profile', 'StudentController@profile');
     $router->post('follow/{teacher}', 'StudentController@follow');
@@ -47,7 +50,7 @@ Route::group([
 
 Route::group([
     'middleware' => 'auth:teacher',
-    'prefix' => 'teacher'
+    'prefix'     => 'teacher'
 ], function (Router $router) {
     $router->get('profile', 'TeacherController@profile');
     $router->delete('unlink/{binding}', 'TeacherController@unlink');

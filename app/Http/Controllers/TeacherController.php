@@ -15,8 +15,8 @@ class TeacherController extends Controller
      */
     public function profile(Request $request)
     {
-        $user = $request->user();
-        $user->load('line.teacher');
+        $user = $request->user()->makeHidden(['password', 'deleted_at']);
+        $user->load('line.user');
 
         $followers = $user->followers()->get();
 

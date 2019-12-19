@@ -16,7 +16,15 @@
             <input type="submit">
         </form>
         <a href="/oauth/line" v-if="!this.token">Login with Line</a>
-        <p v-else>Login to bind your account</p>
+        <div v-else>
+            <p>Login to bind your account or choose one below</p>
+            <ul>
+                <li v-for="binding in this.bindings">
+                    {{ binding }}
+                    <a href="" @click.prevent="loginWithBinding(binding)">Login</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -25,13 +33,15 @@
             if (this.$route.query.token) {
                 localStorage.setItem('token', this.$route.query.token);
                 this.token = this.$route.query.token;
+                this.queryBindings();
             }
         },
         name: 'login',
         data() {
             return {
                 inputText: {email: '', password: '', role: 'teacher'},
-                token: null
+                token: null,
+                bindings: []
             }
         },
         methods: {
@@ -39,7 +49,27 @@
                 axios.post(`/api/auth/${this.inputText.role}/login`, {
                     email: this.inputText.email,
                     password: this.inputText.password,
-                    token: localStorage.getItem('token')
+                    token: this.token
+                }).then(response => {
+                    localStorage.setItem('access_token', response.data.access_token);
+                    localStorage.setItem('role', this.inputText.role);
+                    localStorage.removeItem('token');
+                    this.token = null;
+                    this.$router.push('/')
+                })
+            },
+            queryBindings: function () {
+                axios.post(`/api/auth/line/query_bindings`, {
+                    token: this.token
+                }).then(response => {
+                    this.bindings = response.data;
+                })
+            },
+            loginWithBinding: function (binding) {
+                axios.post(`/api/auth/line/login_with_binding`, {
+                    type: binding.type,
+                    id: binding.id,
+                    token: this.token
                 }).then(response => {
                     localStorage.setItem('access_token', response.data.access_token);
                     localStorage.setItem('role', this.inputText.role);

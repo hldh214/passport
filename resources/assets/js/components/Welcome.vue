@@ -6,7 +6,7 @@
                     <p>Welcome {{ this.role }} {{ name }}</p>
 
                     <p v-if="this.line">
-                        Linked Line account: {{ this.line[this.role].name }}
+                        Linked Line account: {{ this.line.user.name }}
                         <a href="" @click.prevent="unlink(line)">Unlink</a>
                     </p>
 

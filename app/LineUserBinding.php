@@ -33,13 +33,18 @@ class LineUserBinding extends Model
 
     protected $guarded = ['id'];
 
-    public function student()
+    public function user()
     {
-        return $this->belongsTo(LineUser::class);
+        return $this->belongsTo(LineUser::class, 'line_user_id');
     }
 
     public function teacher()
     {
-        return $this->belongsTo(LineUser::class);
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }
