@@ -62,7 +62,6 @@
                 });
             },
             unlink(binding) {
-                console.log(binding);
                 axios.delete(`/api/${this.role}/unlink/${binding.id}`).then(_ => {
                     this.line = null;
                 });

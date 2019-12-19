@@ -50,4 +50,5 @@ Route::group([
     'prefix' => 'teacher'
 ], function (Router $router) {
     $router->get('profile', 'TeacherController@profile');
+    $router->delete('unlink/{binding}', 'TeacherController@unlink');
 });

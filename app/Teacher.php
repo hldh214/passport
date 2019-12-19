@@ -40,4 +40,9 @@ class Teacher extends Authenticatable
     use HasApiTokens, CanBeFollowed, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function line()
+    {
+        return $this->hasOne(LineUserBinding::class);
+    }
 }

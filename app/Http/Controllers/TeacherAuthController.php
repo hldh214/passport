@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\LineUser;
+use App\LineUserBinding;
 use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class TeacherAuthController extends Controller
 {
@@ -33,7 +36,8 @@ class TeacherAuthController extends Controller
     {
         $this->validate($request, [
             'email'    => 'required|string|email',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'token'    => 'nullable|string'
         ]);
 
         /** @var Teacher|null $teacher */
@@ -43,6 +47,20 @@ class TeacherAuthController extends Controller
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
+        }
+
+        if (filled($request->get('token'))) {
+            $line_user_data = Socialite::driver('line')->userFromToken($request->get('token'));
+            $line_user      = LineUser::whereOpenid($line_user_data->id)->first();  // null?
+
+            if (!LineUserBinding::whereLineUserId($line_user->id)
+                ->where('teacher_id', '<>', 0)
+                ->exists()) {
+                LineUserBinding::create([
+                    'line_user_id' => $line_user->id,
+                    'teacher_id'   => $teacher->id
+                ]);
+            }
         }
 
         $token_result = $teacher->createToken('Personal Access Token');

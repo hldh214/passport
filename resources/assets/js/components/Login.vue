@@ -15,7 +15,8 @@
             </label>
             <input type="submit">
         </form>
-        <a href="/oauth/line">Login with Line</a>
+        <a href="/oauth/line" v-if="!this.token">Login with Line</a>
+        <p v-else>Login to bind your account</p>
     </div>
 </template>
 <script>
@@ -23,12 +24,14 @@
         created() {
             if (this.$route.query.token) {
                 localStorage.setItem('token', this.$route.query.token);
+                this.token = this.$route.query.token;
             }
         },
         name: 'login',
         data() {
             return {
-                inputText: {email: '', password: '', role: 'teacher'}
+                inputText: {email: '', password: '', role: 'teacher'},
+                token: null
             }
         },
         methods: {
@@ -41,6 +44,7 @@
                     localStorage.setItem('access_token', response.data.access_token);
                     localStorage.setItem('role', this.inputText.role);
                     localStorage.removeItem('token');
+                    this.token = null;
                     this.$router.push('/')
                 })
             }
