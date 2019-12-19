@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\LineUser;
 use Illuminate\Http\Request;
+use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Facades\Socialite;
 
 class LineAuthController extends Controller
@@ -12,8 +14,21 @@ class LineAuthController extends Controller
         return Socialite::with('line')->redirect();
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
-        return response()->json(Socialite::driver('line')->user());
+        if ($request->has('error')) {
+            return response()->json($request->get('error_description'));
+        }
+
+        /** @var AbstractUser $line_user_data */
+        $line_user_data = Socialite::driver('line')->user();
+
+        LineUser::firstOrCreate([
+            'openid' => $line_user_data->getId()
+        ], [
+            'name' => $line_user_data->getName()
+        ]);
+
+        return response()->redirectTo('/login?token=' . $line_user_data->token);
     }
 }

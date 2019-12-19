@@ -5,6 +5,11 @@
                 <div class="title m-b-md">
                     <p>Welcome {{ this.role }} {{ name }}</p>
 
+                    <p v-if="this.line">
+                        Linked Line account: {{ this.line[this.role].name }}
+                        <a href="" @click.prevent="unlink(line)">Unlink</a>
+                    </p>
+
                     <p v-if="this.role === 'student'">teachers list</p>
                     <ul>
                         <li v-for="teacher in this.teachers">
@@ -44,6 +49,7 @@
                     this.followings = response.data.followings;
                     this.teachers = response.data.teachers;
                     this.followers = response.data.followers;
+                    this.line = response.data.user.line;
                 }).catch(reason => {
                     if (reason.response.status === 401) {
                         this.name = 'guest'
@@ -54,11 +60,17 @@
                 axios.post(`/api/${this.role}/follow/${teacher.id}`).then(_ => {
                     teacher.following = !teacher.following;
                 });
+            },
+            unlink(binding) {
+                console.log(binding);
+                axios.delete(`/api/${this.role}/unlink/${binding.id}`).then(_ => {
+                    this.line = null;
+                });
             }
         },
         data() {
             return {
-                name: '', role: '', followings: [], teachers: [], followers: []
+                name: '', role: '', followings: [], teachers: [], followers: [], line: null
             }
         }
     }

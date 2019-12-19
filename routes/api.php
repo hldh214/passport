@@ -42,6 +42,7 @@ Route::group([
 ], function (Router $router) {
     $router->get('profile', 'StudentController@profile');
     $router->post('follow/{teacher}', 'StudentController@follow');
+    $router->delete('unlink/{binding}', 'StudentController@unlink');
 });
 
 Route::group([

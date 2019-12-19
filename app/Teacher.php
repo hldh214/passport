@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Overtrue\LaravelFollow\Traits\CanBeFollowed;
@@ -27,10 +28,16 @@ use Overtrue\LaravelFollow\Traits\CanBeFollowed;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Teacher wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Teacher whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
+ * @property-read int|null $clients_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Student[] $followers
+ * @property-read int|null $followers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
+ * @property-read int|null $tokens_count
  */
 class Teacher extends Authenticatable
 {
-    use HasApiTokens, CanBeFollowed;
+    use HasApiTokens, CanBeFollowed, SoftDeletes;
 
     protected $guarded = ['id'];
 }

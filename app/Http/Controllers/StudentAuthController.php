@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 
+use App\LineUser;
+use App\LineUserBinding;
 use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class StudentAuthController extends Controller
 {
@@ -34,7 +37,8 @@ class StudentAuthController extends Controller
     {
         $this->validate($request, [
             'email'    => 'required|string|email',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'token'    => 'nullable|string'
         ]);
 
         /** @var Student|null $student */
@@ -44,6 +48,16 @@ class StudentAuthController extends Controller
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
+        }
+
+        if (filled($request->get('token'))) {
+            $line_user_data = Socialite::driver('line')->userFromToken($request->get('token'));
+            $line_user      = LineUser::whereOpenid($line_user_data->id)->first();  // null?
+
+            LineUserBinding::firstOrCreate([
+                'line_user_id' => $line_user->id,
+                'student_id' => $student->id
+            ]);
         }
 
         $token_result = $student->createToken('Personal Access Token');

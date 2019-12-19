@@ -20,6 +20,11 @@
 </template>
 <script>
     export default {
+        created() {
+            if (this.$route.query.token) {
+                localStorage.setItem('token', this.$route.query.token);
+            }
+        },
         name: 'login',
         data() {
             return {
@@ -30,10 +35,12 @@
             onSubmit: function () {
                 axios.post(`/api/auth/${this.inputText.role}/login`, {
                     email: this.inputText.email,
-                    password: this.inputText.password
+                    password: this.inputText.password,
+                    token: localStorage.getItem('token')
                 }).then(response => {
                     localStorage.setItem('access_token', response.data.access_token);
                     localStorage.setItem('role', this.inputText.role);
+                    localStorage.removeItem('token');
                     this.$router.push('/')
                 })
             }

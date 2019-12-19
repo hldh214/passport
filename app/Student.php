@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Overtrue\LaravelFollow\Traits\CanFollow;
@@ -34,7 +35,12 @@ use Overtrue\LaravelFollow\Traits\CanFollow;
  */
 class Student extends Authenticatable
 {
-    use HasApiTokens, CanFollow;
+    use HasApiTokens, CanFollow, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function line()
+    {
+        return $this->hasOne(LineUserBinding::class);
+    }
 }
