@@ -41,12 +41,8 @@
                     email: this.inputText.email,
                     password: this.inputText.password,
                     password_confirmation: this.inputText.password_confirmation
-                }).then(response => {
-                    console.log(response);
+                }).then(_ => {
                     this.$router.push('/login')
-                }).catch(reason => {
-                    let data = reason.response.data;
-                    console.log(data);
                 })
             }
         }
