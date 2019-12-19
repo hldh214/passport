@@ -12,6 +12,7 @@ hello from the other side~
  - more front-end stuff?
  - pagination
  - pusher
+ - cleanup code
 
 ### Credit
 
