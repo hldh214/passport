@@ -29,6 +29,7 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     if (error.response.status === 401) {
         localStorage.removeItem('access_token');
+        localStorage.removeItem('role');
     }
 
     return Promise.reject(error);

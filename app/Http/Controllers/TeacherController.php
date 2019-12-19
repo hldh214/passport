@@ -15,7 +15,9 @@ class TeacherController extends Controller
      */
     public function profile(Request $request)
     {
-        $user      = $request->user()->with('line.teacher')->first();
+        $user = $request->user();
+        $user->load('line.teacher');
+
         $followers = $user->followers()->get();
 
         return response()->json(compact('user', 'followers'));

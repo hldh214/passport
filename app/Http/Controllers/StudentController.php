@@ -16,7 +16,9 @@ class StudentController extends Controller
      */
     public function profile(Request $request)
     {
-        $user     = $request->user()->with('line.student')->first();
+        $user = $request->user();
+        $user->load('line.student');
+
         $teachers = Teacher::all()->map(function (Teacher $teacher) use ($user) {
             $teacher['following'] = $teacher->isFollowedBy($user);
 
