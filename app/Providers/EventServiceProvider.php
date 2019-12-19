@@ -16,9 +16,6 @@ class EventServiceProvider extends ServiceProvider
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             // add your listeners (aka providers) here
             'SocialiteProviders\\Line\\LineExtendSocialite@handle',
-        ],
-        'App\Events\Follow' => [
-            'App\Listeners\SendFollowNotification'
         ]
     ];
 

@@ -3,25 +3,25 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <p>Welcome {{ this.role }} {{ name }}</p>
+                    <p>Welcome {{ role }} {{ user.name }}</p>
 
-                    <p v-if="this.line">
-                        Linked Line account: {{ this.line.user.name }}
+                    <p v-if="line">
+                        Linked Line account: {{ line.user.name }}
                         <a href="" @click.prevent="unlink(line)">Unlink</a>
                     </p>
 
-                    <p v-if="this.role === 'student'">teachers list</p>
+                    <p v-if="role === 'student'">teachers list</p>
                     <ul>
-                        <li v-for="teacher in this.teachers">
+                        <li v-for="teacher in teachers">
                             {{ teacher.name }}
                             <a href="" v-if="teacher.following" @click.prevent="toggleFollow(teacher)">Unfollow</a>
                             <a href="" v-else @click.prevent="toggleFollow(teacher)">Follow</a>
                         </li>
                     </ul>
 
-                    <p v-if="this.role === 'teacher'">followers list</p>
+                    <p v-if="role === 'teacher'">followers list</p>
                     <ul>
-                        <li v-for="follower in this.followers">
+                        <li v-for="follower in followers">
                             {{ follower.name }}
                         </li>
                     </ul>
@@ -50,6 +50,16 @@
                     this.teachers = response.data.teachers;
                     this.followers = response.data.followers;
                     this.line = response.data.user.line;
+                    // todo: cleanup
+                    this.user = response.data.user;
+
+                    if (this.role === 'teacher') {
+                        Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+                        Echo.private('follow.' + this.user.id)
+                            .listen('Follow', (event) => {
+                                console.log(event);
+                            });
+                    }
                 }).catch(reason => {
                     if (reason.response.status === 401) {
                         this.name = 'guest'
@@ -69,7 +79,8 @@
         },
         data() {
             return {
-                name: '', role: '', followings: [], teachers: [], followers: [], line: null
+                name: '', role: '', followings: [], teachers: [], followers: [], line: null,
+                user: {id: 0, name: '', role: ''}
             }
         }
     }

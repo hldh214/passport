@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Follow;
 use App\LineUserBinding;
+use App\Student;
 use App\Teacher;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -16,6 +18,7 @@ class StudentController extends Controller
      */
     public function profile(Request $request)
     {
+        /** @var Student $user */
         $user = $request->user()->makeHidden(['password', 'deleted_at']);
         $user->load('line.user');
 
@@ -35,7 +38,14 @@ class StudentController extends Controller
      */
     public function follow(Request $request, Teacher $teacher)
     {
-        $request->user()->toggleFollow($teacher);
+        $result = $request->user()->toggleFollow($teacher);
+
+        if ($result['attached']) {
+            broadcast(new Follow($request->user()->only(['id', 'name']), $teacher->only(['id', 'name']), 'follow'));
+        }
+        if ($result['detached']) {
+            broadcast(new Follow($request->user()->only(['id', 'name']), $teacher->only(['id', 'name']), 'unfollow'));
+        }
 
         return response()->json();
     }

@@ -2,26 +2,40 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Follow
+class Follow implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    /**
+     * @var array
+     */
+    public $causer;
+    /**
+     * @var array
+     */
+    public $target;
+    /**
+     * @var string
+     */
+    public $type;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param  array  $causer
+     * @param  array  $target
+     * @param  string  $type
      */
-    public function __construct()
+    public function __construct(array $causer, array $target, string $type)
     {
-        //
+        $this->causer = $causer;
+        $this->target = $target;
+        $this->type = $type;
     }
 
     /**
@@ -31,6 +45,6 @@ class Follow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('follow.' . $this->target['id']);
     }
 }
