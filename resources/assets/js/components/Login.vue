@@ -32,7 +32,11 @@
         created() {
             if (this.$route.query.token) {
                 localStorage.setItem('token', this.$route.query.token);
-                this.token = this.$route.query.token;
+            }
+
+            this.token = localStorage.getItem('token');
+
+            if (this.token) {
                 this.queryBindings();
             }
         },
@@ -72,7 +76,7 @@
                     token: this.token
                 }).then(response => {
                     localStorage.setItem('access_token', response.data.access_token);
-                    localStorage.setItem('role', this.inputText.role);
+                    localStorage.setItem('role', binding.type);
                     localStorage.removeItem('token');
                     this.token = null;
                     this.$router.push('/')
