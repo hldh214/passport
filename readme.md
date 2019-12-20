@@ -2,6 +2,32 @@
 
 hello from the other side~
 
+### Installation
+
+1. Run in your terminal:
+
+```bash
+$ git clone https://github.com/hldh214/passport.git
+```
+
+2. Set your environment variables in your .env file (use the .env.example as an example);
+
+3. Run in your `passport` folder:
+
+```bash
+$ composer install
+$ php artisan key:generate
+$ php artisan migrate
+```
+
+4. follow [this guide](https://laravel.com/docs/5.5/passport#deploying-passport)
+
+### Usage
+
+1. Register a new user at https://passport.dev/signup
+
+2. Depending on your configuration you may need to define a site within NGINX or Apache; Your URL domain may change from localhost to what you have defined.
+
 ### TODO
 
  - timezone
@@ -12,6 +38,13 @@ hello from the other side~
  - more front-end stuff?
  - pagination
  - [console warnings](https://github.com/pusher/pusher-js/issues/392)
+
+### Contribution
+
+Feel free to contribute.
+
+ - Found a bug? Try to find it in issue tracker https://github.com/hldh214/passport/issues ... If this bug is missing - you can add an issue about it.
+ - Can/want/like develop? Create pull request and I will check it in nearest time!
 
 ### Credit
 
