@@ -24,7 +24,9 @@
             },
 
             logout() {
-                axios.get('/api/auth/student/logout').then(_ => {
+                let role = localStorage.removeItem('role');
+
+                axios.get(`/api/auth/${role}/logout`).then(_ => {
                     localStorage.removeItem('access_token');
                     localStorage.removeItem('role');
                     this.$router.go(0);
