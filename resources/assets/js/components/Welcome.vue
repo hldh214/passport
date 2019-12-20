@@ -57,7 +57,11 @@
                         Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
                         Echo.private('follow.' + this.user.id)
                             .listen('Follow', (event) => {
-                                console.log(event);
+                                if (event.type === 'follow') {
+                                    this.followers.push(event.causer);
+                                } else if (event.type === 'unfollow') {
+                                    this.followers.splice(this.followers.indexOf(event.causer), 1);
+                                }
                             });
                     }
                 }).catch(reason => {

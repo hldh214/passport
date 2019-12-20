@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\LineUserBinding;
+use App\Teacher;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ class TeacherController extends Controller
      */
     public function profile(Request $request)
     {
+        /** @var Teacher $user */
         $user = $request->user()->makeHidden(['password', 'deleted_at']);
         $user->load('line.user');
 
-        $followers = $user->followers()->get();
+        $followers = $user->followers()->get()
+            ->makeHidden(['password', 'email', 'created_at', 'updated_at', 'deleted_at', 'pivot']);
 
         return response()->json(compact('user', 'followers'));
     }
