@@ -3,7 +3,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <p>Welcome {{ role }} {{ user.name }}</p>
+                    <p>Welcome {{ role }} {{ name }}</p>
 
                     <p v-if="line">
                         Linked Line account: {{ line.user.name }}
@@ -84,7 +84,7 @@
         data() {
             return {
                 name: '', role: '', followings: [], teachers: [], followers: [], line: null,
-                user: {id: 0, name: '', role: ''}
+                user: {id: 0, name: ''}
             }
         }
     }

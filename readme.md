@@ -11,7 +11,7 @@ hello from the other side~
  - tests?
  - more front-end stuff?
  - pagination
- - cleanup code
+ - [console warnings](https://github.com/pusher/pusher-js/issues/392)
 
 ### Credit
 
