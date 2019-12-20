@@ -1,22 +1,33 @@
 <template>
     <div class="container">
         <form @submit.prevent="onSubmit">
-            <label for="email">Email:
-                <input id="email" type="email" name="email" v-model="inputText.email">
-            </label>
-            <label for="password">Password:
-                <input id="password" type="password" name="password" v-model="inputText.password">
-            </label>
-            <label for="student">I am student
-                <input id="student" type="radio" name="role" value="student" v-model="inputText.role">
-            </label>
-            <label for="teacher">I am teacher
-                <input id="teacher" type="radio" name="role" value="teacher" v-model="inputText.role">
-            </label>
-            <input type="submit">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" v-model="inputText.email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" v-model="inputText.password">
+            </div>
+            <div class="radio">
+                <label for="student">
+                    <input type="radio" name="role" id="student" value="student" v-model="inputText.role">
+                    I am a student
+                </label>
+            </div>
+            <div class="radio">
+                <label for="teacher">
+                    <input type="radio" name="role" id="teacher" value="teacher" v-model="inputText.role">
+                    I am a teacher
+                </label>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="/oauth/line" v-if="!this.token" role="button" class="btn btn-default">
+                Login with Line
+            </a>
         </form>
-        <a href="/oauth/line" v-if="!this.token">Login with Line</a>
-        <div v-else>
+
+        <div v-if="this.token">
             <p>Login to bind your account or choose one below</p>
             <ul>
                 <li v-for="binding in this.bindings">
