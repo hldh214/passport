@@ -3,10 +3,12 @@ require('./bootstrap');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 Vue.use(VueRouter);
 
 window.axios = Axios;
+window.swal = Swal;
 
 // handle access_token
 axios.interceptors.request.use(
@@ -33,6 +35,9 @@ axios.interceptors.response.use(function (response) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('role');
     }
+
+    // todo: handle all exceptions
+    swal.fire(error.response.data.message);
 
     return Promise.reject(error);
 });

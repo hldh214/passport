@@ -21,8 +21,8 @@
                     I am a teacher
                 </label>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-            <a href="/oauth/line" v-if="!this.token" role="button" class="btn btn-default">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/oauth/line" v-if="!this.token" role="button" class="btn btn-success">
                 Login with Line
             </a>
         </form>
