@@ -37,6 +37,10 @@ class Student extends Authenticatable
 {
     use HasApiTokens, CanFollow, SoftDeletes;
 
+    protected $hidden = [
+        'password', 'deleted_at',
+    ];
+
     protected $guarded = ['id'];
 
     public function line()
