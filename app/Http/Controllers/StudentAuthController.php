@@ -28,9 +28,12 @@ class StudentAuthController extends Controller
 
         $student->save();
 
+        $token_result = $student->createToken('Personal Access Token');
+
         return response()->json([
-            'message' => 'Successfully created student!'
-        ], 201);
+            'access_token' => $token_result->accessToken,
+            'token_type'   => 'Bearer'
+        ]);
     }
 
     public function login(Request $request)

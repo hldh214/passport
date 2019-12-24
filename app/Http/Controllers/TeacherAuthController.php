@@ -19,17 +19,20 @@ class TeacherAuthController extends Controller
             'password' => 'required|string|confirmed'  // with password_confirmation
         ]);
 
-        $student = new Teacher([
+        $teacher = new Teacher([
             'name'     => $request->get('name'),
             'email'    => $request->get('email'),
             'password' => bcrypt($request->get('password'))
         ]);
 
-        $student->save();
+        $teacher->save();
+
+        $token_result = $teacher->createToken('Personal Access Token');
 
         return response()->json([
-            'message' => 'Successfully created student!'
-        ], 201);
+            'access_token' => $token_result->accessToken,
+            'token_type'   => 'Bearer'
+        ]);
     }
 
     public function login(Request $request)

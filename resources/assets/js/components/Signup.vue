@@ -51,8 +51,11 @@
                     email: this.inputText.email,
                     password: this.inputText.password,
                     password_confirmation: this.inputText.password_confirmation
-                }).then(_ => {
-                    this.$router.push('/login')
+                }).then(response => {
+                    localStorage.setItem('access_token', response.data.access_token);
+                    localStorage.setItem('role', this.inputText.role);
+                    localStorage.removeItem('token');
+                    this.$router.push('/')
                 })
             }
         }
