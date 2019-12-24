@@ -31,7 +31,7 @@ class LineAuthController extends Controller
             'name' => $line_user_data->getName()
         ]);
 
-        return response()->redirectTo('/login?token=' . $line_user_data->token);
+        return redirect()->secure('/login?token=' . $line_user_data->token);
     }
 
     public function queryBindings(Request $request)
