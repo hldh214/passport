@@ -52,3 +52,4 @@ Feel free to contribute.
  - https://learnku.com/articles/7358/multiuser-and-multi-field-authentication-system-based-on-laravel-passport-api-two
  - https://medium.com/%40Negaihoshi/laravel-socialite-%E7%B0%A1%E5%96%AE%E7%9A%84%E4%BB%A3%E5%83%B9-ff4ab3f406c1
  - https://github.com/laravel/passport/issues/267
+ - https://stackoverflow.com/a/59467694/6266737

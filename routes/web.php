@@ -20,4 +20,8 @@ Route::group([
     $router->get('line/callback', 'LineAuthController@handleProviderCallback');
 });
 
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+
 Route::get('/{vue}', 'SPAController@index')->where('vue', '.*');

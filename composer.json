@@ -16,7 +16,8 @@
         "overtrue/laravel-follow": "^1.1",
         "paragonie/random_compat": "2.*",
         "pusher/pusher-php-server": "^4.1",
-        "socialiteproviders/line": "^2.1"
+        "socialiteproviders/line": "^2.1",
+        "tcg/voyager": "^1.3"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
@@ -42,8 +43,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
@@ -70,6 +70,10 @@
         "packagist": {
             "type": "composer",
             "url": "https://packagist.org"
+        },
+        "hooks": {
+            "type": "composer",
+            "url": "https://larapack.io"
         }
     }
 }
