@@ -13,6 +13,10 @@
 
 use Illuminate\Routing\Router;
 
+if (App::environment('production', 'staging')) {
+    URL::forceScheme('https');
+}
+
 Route::group([
     'prefix' => 'oauth'
 ], function (Router $router) {
